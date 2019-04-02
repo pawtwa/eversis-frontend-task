@@ -5,7 +5,7 @@
 </div>
 <div class="row">
   <div class="col">
-    <form class="needs-validation" novalidate [formGroup]="userForm" (ngSubmit)="onSubmit()">
+    <form *ngIf="user$ | async; else loading" class="needs-validation" novalidate [formGroup]="userForm" (ngSubmit)="onSubmit($event)">
       <div class="row">
         <div class="col">
           <div class="form-group">
@@ -18,6 +18,7 @@
               formControlName="name" 
               aria-describedby="nameHelp" 
               placeholder="Enter your name"
+              [readonly]="userForm.pending"
             >
             <div class="invalid-feedback">
               Please enter a name.<br />
@@ -37,6 +38,7 @@
               formControlName="surname" 
               aria-describedby="surnameHelp"
               placeholder="Enter your surname"
+              [readonly]="userForm.pending"
             >
             <div class="invalid-feedback">
               Please enter a surname.<br />
@@ -56,6 +58,7 @@
               formControlName="age"
               aria-describedby="ageHelp"
               placeholder="Enter your age"
+              [readonly]="userForm.pending"
             >
             <div class="invalid-feedback">
               Please enter an age.<br />
@@ -65,19 +68,31 @@
         </div>
       </div>
 
-      <div class="card border border-dark" *ngIf="userForm.valid">
+      <div class="card border border-dark" *ngIf="userForm.valid || userForm.pending">
         <div class="card-body text-center text-capitalize font-weight-bold">
           Hello {{ userForm.controls.name.value }} {{ userForm.controls.surname.value }}!
         </div>
       </div>
 
-      <hr />
-
-      <button class="btn btn-secondary" type="submit" [disabled]="userForm.invalid">
-        <span class="spinner-border spinner-border-sm" [ngClass]="{'d-none': !userForm.pending}" role="status" aria-hidden="true"></span>
-        Save
-      </button>
+      <div class="p-3">
+        <button 
+          class="btn btn-secondary float-right" 
+          type="submit" 
+          [disabled]="userForm.invalid || userForm.pending"
+        >
+          <span class="spinner-border spinner-border-sm" [ngClass]="{'d-none': !userForm.pending}" role="status" aria-hidden="true"></span>
+          {{ !userForm.pending ? 'Save' : 'Saving ...' }}
+        </button>
+      </div>
       
     </form>
+
+    <ng-template #loading>
+      <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+    </ng-template>
   </div>
 </div>

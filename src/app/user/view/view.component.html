@@ -1,5 +1,44 @@
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
-    <h1 class="display-4">User Data View</h1>
+    <h1 class="display-4" *ngIf="(user$ | async) as user">{{ user.name }} {{ user.surname }}'s Page</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <div *ngIf="(user$ | async) as user; else loading">
+      <div class="row p-3">
+        <div class="col text-center">
+          <button type="button" class="btn btn-dark" (click)="checkAccess()">Check Access</button>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="hasAccess === 1">
+        <div class="col">
+          <div class="mx-auto" style="width: 500px; height: 500px;">
+              <img 
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Angular_full_color_logo.svg/1024px-Angular_full_color_logo.svg.png" 
+              class="img-fluid" 
+              alt="Image for adults"
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="hasAccess === 0">
+        <div class="col">
+          <p class="alert alert-danger" role="alert">
+            You must be at least 18 years old!
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #loading>
+      <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+    </ng-template>
   </div>
 </div>

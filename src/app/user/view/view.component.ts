@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+
+import { UserService } from './../../../../src/app/shared/services/user.service';
+import { UserInterface } from './../../../../src/app/shared/models/user.model';
 
 @Component({
   selector: 'app-view',
@@ -6,10 +10,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./view.component.scss']
 })
 export class ViewComponent implements OnInit {
+  user$: Observable<UserInterface>;
 
-  constructor() { }
+  hasAccess = -1;
+
+  constructor(
+    private userService: UserService
+  ) { }
 
   ngOnInit() {
+    this.user$ = this.userService.getUser();
   }
 
+  checkAccess() {
+    this.hasAccess = this.userService.user.age >= 18 ? 1 : 0;
+  }
 }
