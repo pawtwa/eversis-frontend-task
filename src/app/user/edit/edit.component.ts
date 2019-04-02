@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-edit',
@@ -7,9 +8,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditComponent implements OnInit {
 
-  constructor() { }
+  userForm: FormGroup;
 
-  ngOnInit() {
+  constructor() {
+    this.initForm();
   }
 
+  ngOnInit() {
+
+  }
+
+  async onSubmit() {
+    console.log(this.userForm);
+  }
+
+  private initForm() {
+    this.userForm = new FormGroup({
+      name: new FormControl('', Validators.pattern('[a-zA-Z ]*')),
+      surname: new FormControl('', Validators.pattern('[a-zA-Z ]*')),
+      age: new FormControl('', Validators.pattern('[1-9][0-9]*')),
+    });
+  }
 }

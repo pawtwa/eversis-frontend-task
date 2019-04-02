@@ -1,5 +1,58 @@
 <div class="jumbotron jumbotron-fluid">
-    <div class="container">
-      <h1 class="display-4">User Data Edit</h1>
-    </div>
+  <div class="container">
+    <h1 class="display-4">User Data Edit</h1>
   </div>
+</div>
+<div class="row">
+  <div class="col">
+    <form class="needs-validation" novalidate [formGroup]="userForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col">
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" [ngClass]="{'is-invalid': userForm.controls.name.touched && userForm.controls.name.invalid}" id="name" formControlName="name" aria-describedby="nameHelp" placeholder="Enter your name">
+            <div class="invalid-feedback">
+              Please enter correct name. Only letters allowed.
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="form-group">
+            <label for="surname">Surname</label>
+            <input type="text" class="form-control" [ngClass]="{'is-invalid': userForm.controls.surname.touched && userForm.controls.surname.invalid}" id="surname" formControlName="surname" aria-describedby="surnameHelp"
+              placeholder="Enter your surname">
+            <div class="invalid-feedback">
+              Please enter correct surname. Only letters allowed.
+            </div>
+          </div>
+        </div>
+
+        <div class="col">
+          <div class="form-group">
+            <label for="age">Age</label>
+            <input type="number" class="form-control" [ngClass]="{'is-invalid': userForm.controls.age.touched && userForm.controls.age.invalid}" id="age" formControlName="age" aria-describedby="ageHelp"
+              placeholder="Enter your age">
+            <div class="invalid-feedback">
+              Please enter correct age. Only digits allowed.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body text-center">
+          Hello {{ userForm.controls.name.value }} {{ userForm.controls.surname.value }}<ng-template [ngIf]="userForm.controls.name.value || userForm.controls.surname.value">!</ng-template>
+        </div>
+      </div>
+
+      <hr />
+
+      <button class="btn btn-primary" type="submit" [disabled]="userForm.touched && userForm.invalid">
+        <span class="spinner-border spinner-border-sm" [ngClass]="{'d-none': !userForm.pending}" role="status" aria-hidden="true"></span>
+        Save
+      </button>
+      
+    </form>
+  </div>
+</div>
