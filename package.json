@@ -7,7 +7,12 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "predeploy": "ng build --base-href=\"/eversis-frontend-task/\" --deploy-url=\"\"",
+    "predeploy_prod": "ng build --prod --base-href=\"/eversis-frontend-task/\" --deploy-url=\"\"",
+    "gh_deploy": "gh-pages -d dist/eversis-frontend-task",
+    "deploy": "npm run predeploy && npm run gh_deploy",
+    "deploy_prod": "npm run predeploy_prod && npm run gh_deploy"
   },
   "private": true,
   "dependencies": {
