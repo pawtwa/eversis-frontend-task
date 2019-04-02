@@ -10,9 +10,18 @@
         <div class="col">
           <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" class="form-control" [ngClass]="{'is-invalid': userForm.controls.name.touched && userForm.controls.name.invalid}" id="name" formControlName="name" aria-describedby="nameHelp" placeholder="Enter your name">
+            <input 
+              type="text" 
+              class="form-control" 
+              [ngClass]="{'is-invalid': (userForm.touched || userForm.dirty) && userForm.controls.name.invalid}" 
+              id="name" 
+              formControlName="name" 
+              aria-describedby="nameHelp" 
+              placeholder="Enter your name"
+            >
             <div class="invalid-feedback">
-              Please enter correct name. Only letters allowed.
+              Please enter a name.<br />
+              Only letters allowed.
             </div>
           </div>
         </div>
@@ -20,10 +29,18 @@
         <div class="col">
           <div class="form-group">
             <label for="surname">Surname</label>
-            <input type="text" class="form-control" [ngClass]="{'is-invalid': userForm.controls.surname.touched && userForm.controls.surname.invalid}" id="surname" formControlName="surname" aria-describedby="surnameHelp"
-              placeholder="Enter your surname">
+            <input 
+              type="text" 
+              class="form-control" 
+              [ngClass]="{'is-invalid': (userForm.touched  || userForm.dirty) && userForm.controls.surname.invalid}" 
+              id="surname" 
+              formControlName="surname" 
+              aria-describedby="surnameHelp"
+              placeholder="Enter your surname"
+            >
             <div class="invalid-feedback">
-              Please enter correct surname. Only letters allowed.
+              Please enter a surname.<br />
+              Only letters allowed.
             </div>
           </div>
         </div>
@@ -31,24 +48,32 @@
         <div class="col">
           <div class="form-group">
             <label for="age">Age</label>
-            <input type="number" class="form-control" [ngClass]="{'is-invalid': userForm.controls.age.touched && userForm.controls.age.invalid}" id="age" formControlName="age" aria-describedby="ageHelp"
-              placeholder="Enter your age">
+            <input 
+              type="number"
+              class="form-control"
+              [ngClass]="{'is-invalid': (userForm.touched || userForm.dirty) && userForm.controls.age.invalid}"
+              id="age"
+              formControlName="age"
+              aria-describedby="ageHelp"
+              placeholder="Enter your age"
+            >
             <div class="invalid-feedback">
-              Please enter correct age. Only digits allowed.
+              Please enter an age.<br />
+              Only digits allowed.
             </div>
           </div>
         </div>
       </div>
 
-      <div class="card">
-        <div class="card-body text-center">
-          Hello {{ userForm.controls.name.value }} {{ userForm.controls.surname.value }}<ng-template [ngIf]="userForm.controls.name.value || userForm.controls.surname.value">!</ng-template>
+      <div class="card border border-dark" *ngIf="userForm.valid">
+        <div class="card-body text-center text-capitalize font-weight-bold">
+          Hello {{ userForm.controls.name.value }} {{ userForm.controls.surname.value }}!
         </div>
       </div>
 
       <hr />
 
-      <button class="btn btn-primary" type="submit" [disabled]="userForm.touched && userForm.invalid">
+      <button class="btn btn-secondary" type="submit" [disabled]="userForm.invalid">
         <span class="spinner-border spinner-border-sm" [ngClass]="{'d-none': !userForm.pending}" role="status" aria-hidden="true"></span>
         Save
       </button>

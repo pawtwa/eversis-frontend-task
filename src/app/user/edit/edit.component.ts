@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -6,16 +6,21 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.scss']
 })
-export class EditComponent implements OnInit {
+export class EditComponent implements OnInit, OnDestroy {
 
   userForm: FormGroup;
+
+  private onlyLettersPattern = '[a-zA-Z żźśóńłęćąŻŹŚÓŃŁĘĆĄ]*';
+  private onlyDigitsPattern = '[1-9][0-9]*';
 
   constructor() {
     this.initForm();
   }
 
   ngOnInit() {
+  }
 
+  ngOnDestroy() {
   }
 
   async onSubmit() {
@@ -24,9 +29,17 @@ export class EditComponent implements OnInit {
 
   private initForm() {
     this.userForm = new FormGroup({
-      name: new FormControl('', Validators.pattern('[a-zA-Z ]*')),
-      surname: new FormControl('', Validators.pattern('[a-zA-Z ]*')),
-      age: new FormControl('', Validators.pattern('[1-9][0-9]*')),
+      name: new FormControl('', [
+        Validators.required,
+        Validators.pattern(this.onlyLettersPattern)
+      ]),
+      surname: new FormControl('', [
+        Validators.required,
+        Validators.pattern(this.onlyLettersPattern)]),
+      age: new FormControl('', [
+        Validators.required,
+        Validators.pattern(this.onlyDigitsPattern)
+      ]),
     });
   }
 }
