@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 // import { CommonModule } from '@angular/common';
 
 import { UserService } from './services/user.service';
@@ -8,8 +9,10 @@ import { UserService } from './services/user.service';
   ],
   imports: [
     // CommonModule
+    NgbCollapseModule
   ],
   exports: [
+    NgbCollapseModule
   ],
   providers: [
     UserService
